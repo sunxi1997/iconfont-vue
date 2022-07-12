@@ -21,7 +21,7 @@ export default function iconfontToVue(iconfontJSSource, distDir) {
 }
 
 const JSIconVueTemplate = ({ name, path, viewBox }) => {
-  const pathList = [...path.matchAll(jsPathReg)].map(r => r[0])
+  const pathList = [...path.matchAll(jsPathReg)].map(r => r.groups.d)
   const pathStr = `[${ pathList.map(path => `
   createVNode('path', {
     d: '${ path }'
