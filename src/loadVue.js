@@ -22,10 +22,10 @@ export default function iconfontToVue(iconfontJSSource, distDir) {
 
 const JSIconVueTemplate = ({ name, path, viewBox }) => {
   const pathList = [...path.matchAll(jsPathReg)].map(r => r[0])
-  const pathStr = `[${ pathList.map(path => `createVNode('path', {
-  d: '${ path }'
-}, null, -1)
-`).join(',') }]`
+  const pathStr = `[${ pathList.map(path => `
+  createVNode('path', {
+    d: '${ path }'
+  }, null, -1)`).join(',\r') }\r]`
   return `import { defineComponent, openBlock, createBlock, createVNode } from 'vue';
 
 const attrs = {
