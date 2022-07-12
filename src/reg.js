@@ -3,4 +3,4 @@ export const svgReg = /glyph glyph-name="(?<name>[^"]+)" unicode="(?<unicode>[^"
 
 export const jsReg = /<symbol id="(?<name>[^"]+)" viewBox="(?<viewBox>[^"]+)">(?<path>(<path[^>]+><\/path>)+)<\/symbol>/g
 
-export const jsPathReg = /<path d="(?<d>[^"]+)"\s*><\/path>/g
+export const jsPathReg = /<path d="(?<d>[^"]+)"[^>]*><\/path>/g
