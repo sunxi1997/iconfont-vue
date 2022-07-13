@@ -15,7 +15,7 @@ export default function iconfontToVue(iconfontJSSource, distDir) {
   const index = JSIndexTemplate(result)
   const tsd = TSDescTemplate(result)
   fs.writeFileSync(path.join(distDir, `index.js`), index)
-  fs.writeFileSync(path.join(distDir, `index.d.ts`), index)
+  fs.writeFileSync(path.join(distDir, `index.d.ts`), tsd)
 }
 
 const JSIndexTemplate = result => {
