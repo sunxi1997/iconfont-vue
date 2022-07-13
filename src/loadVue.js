@@ -37,7 +37,7 @@ declare module './index.js' {
 }
 
 declare interface icons {
-  ${ nameList.join(': any | Component\r  ') }
+  ${ nameList.join(': any | Component\r  ') }: any | Component
 }
 `
 }
