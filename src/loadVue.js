@@ -13,7 +13,9 @@ export default function iconfontToVue(iconfontJSSource, distDir) {
   })
 
   const index = JSIndexTemplate(result)
+  const tsd = TSDescTemplate(result)
   fs.writeFileSync(path.join(distDir, `index.js`), index)
+  fs.writeFileSync(path.join(distDir, `index.d.ts`), index)
 }
 
 const JSIndexTemplate = result => {
@@ -26,6 +28,19 @@ const JSIndexTemplate = result => {
   return `${ importContent }\r ${ exportContent }`
 }
 
+const TSDescTemplate = result => {
+  const nameList = result.map(({ groups }) => getCompName(groups.name))
+  return `import { Component } from "vue";
+
+declare module './index.js' {
+  export default icons
+}
+
+declare interface icons {
+  ${ nameList.join(': any | Component\r  ') }
+}
+`
+}
 
 const JSIconVueTemplate = ({ name, path, viewBox }) => {
   const pathList = [...path.matchAll(jsPathReg)].map(r => r.groups.d)
