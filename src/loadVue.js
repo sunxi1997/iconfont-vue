@@ -1,6 +1,7 @@
 import fs from "fs";
-import { jsPathReg, jsReg } from "./reg.js";
+import { jsPathReg, jsReg } from "./utils/reg.js";
 import path from "path";
+import { getCompName } from "./utils/index.js";
 
 export default function iconfontToVue(iconfontJSSource, distDir) {
   const source = fs.readFileSync(iconfontJSSource).toString()
@@ -90,8 +91,3 @@ export default defineComponent({
   }
 });
 `
-
-
-function getCompName(name) {
-  return name.replaceAll(/(-|^)(.)/g, ($0, $1, $2) => $2.toUpperCase())
-}

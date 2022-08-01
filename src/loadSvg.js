@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import { jsReg } from "./reg.js";
+import { jsReg } from "./utils/reg.js";
 
 export default function iconfontToSvg(iconfontJSSource, distDir) {
   const source = fs.readFileSync(iconfontJSSource).toString()
