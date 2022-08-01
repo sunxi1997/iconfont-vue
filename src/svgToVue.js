@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { svgReg } from "./utils/reg.js";
-import { getCompName } from "./utils/index.js";
+import { getCompName, vueTemplate } from "./utils/index.js";
 
 export default function svgToVue(svgSourceDir, distDir, { fileNameCallback, CompNameCallback } = {}) {
   const fileList = fs.readdirSync(svgSourceDir)
@@ -43,7 +43,7 @@ function JSIconVueTemplate(name, content, CompNameCallback) {
     compName = CompNameCallback(compName)
   }
   return `<template>
-  ${ content }
+  ${ vueTemplate(content) }
 </template>
 
 <script>
