@@ -9,15 +9,14 @@ export default function svgToVue(svgSourceDir, distDir, { fileNameCallback, Comp
     const name = getCompName(file.replace(/(^.+)\.svg$/, (_, $1) => $1))
     let svg = fs.readFileSync(path.join(svgSourceDir, file)).toString()
     const res = svg.match(svgReg)
-    if (!res) {
-      return
+    if (res) {
+      const { width, height } = res.groups
+      const viewBox = `0 0 ${ width } ${ height }`
+      svg = svg
+      .replace(/(<svg[^>]*)\swidth="(\d+)"/, (_, $1) => $1)
+      .replace(/(<svg[^>]*)\sheight="(\d+)"/, (_, $1) => $1)
+      .replace(/<svg\s/, `<svg viewBox="${ viewBox }" `)
     }
-    const { width, height } = res.groups
-    const viewBox = `0 0 ${ width } ${ height }`
-    svg = svg
-    .replace(/(<svg[^>]*)\swidth="(\d+)"/, (_, $1) => $1)
-    .replace(/(<svg[^>]*)\sheight="(\d+)"/, (_, $1) => $1)
-    .replace(/<svg\s/, `<svg viewBox="${ viewBox }" `)
 
     const iconVue = JSIconVueTemplate(name, svg, CompNameCallback)
 
