@@ -1,1 +1,1 @@
-import Icon1 from './Icon1';import Edit from './Edit';import Example from './Example';import Eye from './Eye'; export {  Icon1,  Edit,  Example,  Eye}
+import Icon1 from './Icon1';import Edit from './Edit';import Example from './Example';import Eye from './Eye';import Icongengduocaozuo from './Icongengduocaozuo'; export {  Icon1,  Edit,  Example,  Eye,  Icongengduocaozuo}
