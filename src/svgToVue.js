@@ -5,7 +5,7 @@ import { getCompName } from "./utils/index.js";
 
 export default function svgToVue(svgSourceDir, distDir, { fileNameCallback, CompNameCallback } = {}) {
   const fileList = fs.readdirSync(svgSourceDir)
-  fileList.forEach(file => {
+  const files = fileList.map(file => {
     const name = getCompName(file.replace(/(^.+)\.svg$/, (_, $1) => $1))
     let svg = fs.readFileSync(path.join(svgSourceDir, file)).toString()
     const res = svg.match(svgReg)
@@ -23,8 +23,13 @@ export default function svgToVue(svgSourceDir, distDir, { fileNameCallback, Comp
 
     const fileName = fileNameCallback ? fileNameCallback(name) : name
 
-    fs.writeFileSync(path.join(distDir, `${ fileName }.vue`), iconVue)
+    return [fileName, iconVue]
   })
+  files.forEach(([fileName, fileContent]) => {
+    fs.writeFileSync(path.join(distDir, `${ fileName }.vue`), fileContent)
+  })
+  const index = JSIndexTemplate(files)
+  fs.writeFileSync(path.join(distDir, `index.js`), index)
 }
 
 function JSIconVueTemplate(name, content, CompNameCallback) {
@@ -42,4 +47,14 @@ export default {
 }
 </script>
 `
+}
+
+function JSIndexTemplate(fileList) {
+  const nameList = fileList.map(([name]) => name)
+  let importContent = ''
+  nameList.forEach(name => {
+    importContent += `import ${ name } from './${ name }';\r`
+  })
+  let exportContent = `export {\r  ${ nameList.join(',\r  ') }\r}`
+  return `${ importContent }\r ${ exportContent }`
 }
