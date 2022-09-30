@@ -1,9 +1,19 @@
 import path from "path";
 import fs from "fs";
 import { jsReg } from "./utils/reg.js";
+import axios from "axios";
 
 export default function iconfontToSvg(iconfontJSSource, distDir) {
   const source = fs.readFileSync(iconfontJSSource).toString()
+  iconfontToSvgBySource(source, distDir)
+}
+
+export async function iconfontToSvgByUrl(url, distDir) {
+  const { data } = await axios.get(url.replace(/^\/\//, 'https://'))
+  iconfontToSvgBySource(data, distDir)
+}
+
+export function iconfontToSvgBySource(source, distDir) {
   const result = [...source.matchAll(jsReg)]
 
   result.forEach(({ groups }) => {
@@ -17,7 +27,6 @@ export default function iconfontToSvg(iconfontJSSource, distDir) {
 
     fs.writeFileSync(path.join(distDir, `${ name }.svg`), svg)
   })
-
 }
 
 const JSSvgTemplate = ({ name, path, viewBox }) =>

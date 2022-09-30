@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export function getCompName(name) {
   return getFileName(name).replace(/^(\d+)/, 'Icon$1')
 }
@@ -9,4 +11,10 @@ export function getFileName(name) {
 export function vueTemplate(content) {
   return content.replace('<style type="text/css"></style>', '')
   .replace(/<style\s*\/>/, '')
+}
+
+export async function getIconfontSource(iconfontUrl) {
+  const url = iconfontUrl.replace(/^\/\//, 'https://')
+  const { data } = await axios.get(url)
+  return data
 }

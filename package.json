@@ -11,5 +11,8 @@
     "@types/node": "^18.0.3"
   },
   "author": "2351405472@qq.com",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
 }

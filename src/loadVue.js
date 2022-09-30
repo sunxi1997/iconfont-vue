@@ -1,10 +1,19 @@
 import fs from "fs";
 import { jsPathReg, jsReg } from "./utils/reg.js";
 import path from "path";
-import { getCompName } from "./utils/index.js";
+import { getCompName, getIconfontSource } from "./utils/index.js";
 
 export default function iconfontToVue(iconfontJSSource, distDir) {
   const source = fs.readFileSync(iconfontJSSource).toString()
+  iconfontToVueBySource(source, distDir)
+}
+
+export async function iconfontToVueByUrl(url, distDir) {
+  const data = await getIconfontSource(url)
+  iconfontToVueBySource(data, distDir)
+}
+
+export function iconfontToVueBySource(source, distDir) {
   const result = [...source.matchAll(jsReg)]
 
   result.forEach(({ groups }) => {
